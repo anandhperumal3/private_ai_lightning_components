@@ -1,4 +1,4 @@
-from privateAI_synthetic_data_generator import PrivateAISyntheticData
+from private_ai_synthetic_data_generator import PrivateAISyntheticData
 import lightning as L
 import os
 
@@ -14,6 +14,6 @@ class PrivateAIApp(L.LightningFlow):
         )
 
     def run(self):
-        self.pai_sythetic_data_generator.synthetic_text('I work at Private AI and I live in Vancouver.')
+        self.pai_sythetic_data_generator.run('I work at Private AI and I live in Vancouver.')
 
 app = L.LightningApp(PrivateAIApp())
