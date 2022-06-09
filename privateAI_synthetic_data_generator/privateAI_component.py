@@ -1,10 +1,13 @@
+import time
 import json
 import lightning as L
 import requests
 from datasets import load_dataset
+from subprocess import Popen
 
 class PrivateAISyntheticData(L.LightningWork):
-    def __init__(self, key, mode, text_features, url):
+
+    def __init__(self, key, mode, text_feature, url):
         """
         Private-AI Data Module, for synthetic data generation
         :param key: PAI customer Key
@@ -16,8 +19,18 @@ class PrivateAISyntheticData(L.LightningWork):
         super().__init__()
         self.key = key
         self.mode = mode
-        self.text_features = text_features
+        self.text_feature = text_feature
         self.url = url
+        self.output_path = None
+        self.start_server()
+
+    def start_server(self):
+        # start docker
+        # Popen("docker run --rm -p 8085:8085 deid:2.11full".split(" "))
+        cmd = "docker run --rm -p 8088:8088 deid:2.11full"
+        Popen(cmd.split(" "))
+        time.sleep(900)
+        return
 
     def pai_docker_call(self, text) -> str:
         """
@@ -47,14 +60,18 @@ class PrivateAISyntheticData(L.LightningWork):
         example[text_feature_name] = self.pai_docker_call(example[text_feature_name])
         return example
 
-    def run(self, input_text_or_path: str, action: str = 'individual', output_dir: str = None):
-        synthetic_data = None
-        for text_feature_name in self.text_feature_names:
-            if action == 'batch':
-                assert output_dir, "output directory parameter is requried in-order to save the csv"
-                synthetic_data = load_dataset('csv',data_files=input_text_or_path)
-                synthetic_data = synthetic_data.map(lambda e: self.synthetic_text(e, text_feature_name))
-                synthetic_data.to_csv(output_dir)
-            else:
-                synthetic_data = self.synthetic_text(input_text_or_path, text_feature_name)
-        return synthetic_data
+    def run(self, input_text_or_path: str, action: str = 'individual', output_path: str = None):
+        print(action)
+
+        if action == 'batch':
+            assert output_path, "output directory parameter is requried in-order to save the csv"
+            synthetic_data = load_dataset('csv', data_files=input_text_or_path)
+            synthetic_data = synthetic_data.map(lambda e: self.synthetic_text(e, self.text_feature))
+            synthetic_data['train'].to_csv(output_path)
+            self.output_path = output_path
+        else:
+            print(action)
+            synthetic_data = self.synthetic_text({'text': input_text_or_path}, self.text_feature)
+            print(synthetic_data)
+            return synthetic_data
+        return None
