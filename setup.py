@@ -28,4 +28,5 @@ setup(
     url="https://github.com/PyTorchLightning/lightning-component-template",
     install_requires=setup_tools._load_requirements(_PATH_ROOT),
     packages=find_packages(exclude=["tests", "tests.*"]),
+    include_package_data=True,
 )
