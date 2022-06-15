@@ -1,3 +1,28 @@
+<div align="center">
+<img src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/lai.png" width="200px">
+
+A Lightning component to make your data private using Private AI
+
+______________________________________________________________________
+
+</div>
+
+## Install
+
+Use these instructions to install:
+
+```bash
+git clone https://github.com/anandhperumal3/private_ai_lightning_components.git
+cd private_ai_lightning_components
+pip install -r requirements.txt
+pip install -e .
+```
+
+## Use the component
+
+To try the component, copy the code below, save it in `app.py` file and run using `lightning run app app.py`.
+
+```python
 import lightning as L
 from lightning.storage import Drive
 from lightning.frontend import StreamlitFrontend
@@ -24,7 +49,7 @@ class Visualizer(L.LightningFlow):
     def __init__(self):
         super().__init__()
         self.input_path = None
-        self.output_path = None 
+        self.output_path = None
 
     def run(self, input_path, output_path):
         self.input_path = input_path
@@ -70,7 +95,7 @@ class PrivateAIApp(L.LightningFlow):
 
     def run(self):
         # This will be the path to your input dataset
-        self.input_path = "data.csv"
+        self.input_path = "assets/data.csv"
 
         self.dataset_work.run(self.input_path)
         self.pai_sythetic_data_generator.run(
@@ -84,3 +109,4 @@ class PrivateAIApp(L.LightningFlow):
 
 
 app = L.LightningApp(PrivateAIApp())
+```
