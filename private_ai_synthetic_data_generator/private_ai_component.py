@@ -5,7 +5,7 @@
 # import requests
 
 import lightning as L
-from lightning.storage import Drive
+from lightning.app.storage import Drive
 
 from datasets import load_dataset
 
@@ -14,10 +14,6 @@ from typing import List, Union
 
 
 class PrivateAISyntheticData(L.LightningWork):
-
-    # LOCAL_STORE_DIR = Path(os.path.join(Path.cwd(), ".lightning-store"))
-    # if not Path.exists(LOCAL_STORE_DIR):
-    #     Path.mkdir(LOCAL_STORE_DIR)
     def __init__(
         self,
         key: str,
