@@ -1,6 +1,6 @@
 import lightning as L
-from lightning.storage import Drive
-from lightning.frontend import StreamlitFrontend
+from lightning.app.storage import Drive
+from lightning.app.frontend import StreamlitFrontend
 
 from private_ai_synthetic_data_generator import PrivateAISyntheticData
 
@@ -59,8 +59,6 @@ class PrivateAIApp(L.LightningFlow):
             key=pai_access_token,
             mode='standard',
             text_features=["name", "city"],
-            host='localhost',
-            port=8080,
             drive=self.dataset_work.drive,
             output_path=self.output_path,
         )
@@ -70,7 +68,7 @@ class PrivateAIApp(L.LightningFlow):
 
     def run(self):
         # This will be the path to your input dataset
-        self.input_path = "data.csv"
+        self.input_path = "assets/data.csv"
 
         self.dataset_work.run(self.input_path)
         self.pai_sythetic_data_generator.run(
