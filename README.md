@@ -24,8 +24,8 @@ To try the component, copy the code below, save it in `app.py` file and run usin
 
 ```python
 import lightning as L
-from lightning.app.storage import Drive
-from lightning.app.frontend import StreamlitFrontend
+from lightning.storage import Drive
+from lightning.frontend import StreamlitFrontend
 
 from private_ai_synthetic_data_generator import PrivateAISyntheticData
 

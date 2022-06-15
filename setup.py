@@ -24,8 +24,7 @@ setup(
     description="⚡ Lightning component ⚡ Synthesize your data into a Private Data using PrivateAI",
     author="anandh_perumal",
     author_email="anandh@private-ai.com",
-    # REPLACE WITH YOUR OWN GITHUB PROJECT LINK
-    url="https://github.com/PyTorchLightning/lightning-component-template",
+    url="https://github.com/anandhperumal3/private_ai_lightning_components",
     install_requires=setup_tools._load_requirements(_PATH_ROOT),
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
